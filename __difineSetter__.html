@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		let proto = {
+			// response: {
+			// 	body: 1111
+			// }
+		};
+
+		function delegateSet(property, name) {
+			proto.__defineSetter__(name, function (val) {
+				this[property][name] = val;
+			});
+		}
+
+		function delegateGet(property, name) {
+			proto.__defineGetter__(name, function () {
+				// console.log('this', this);
+				// console.log('property', property);
+				// console.log('name', name);
+				return this[property][name];
+			})
+		}
+
+		let responseSet = ['body', 'status'];
+		let responseGet = responseSet;
+		responseSet.forEach(ele => delegateSet('response', ele));
+		responseGet.forEach(ele => delegateGet('response', ele));
+		console.log(proto);
+		// console.log(proto.body);
+		// console.log(proto.status);
+		// console.log(proto.getBody);
+		// console.log(proto.status);
+	</script>
+</body>
+
+</html>
